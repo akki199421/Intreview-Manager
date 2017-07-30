@@ -1,6 +1,9 @@
 (function(){
 	angular.module('profileMag').
-	controller('ProfileController', function(){
-		console.log('controller');	
+	controller('ProfileController', function($scope){
+		console.log('sfsdf controller');	
+		$scope.name = 'akshsy';
+		$scope.oneAtATime = true;
+		$scope.isRead = false;
 	});
 })();

@@ -1,3 +1,7 @@
 .clearfix{
 	clear: both;
 }
+
+.panel-default.highlight>.panel-heading{
+	background-color: #ddd;
+}
