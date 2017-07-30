@@ -1,0 +1,48 @@
+<%- include('partials/header') %>
+<div class="form-container">
+    <h2>Candidate Profile</h2>
+    <% if(locals.error) { %>
+        <div class="alert alert-danger"><%= error %></div>
+    <% } %>
+    <% if(locals.success) { %>
+        <div class="alert alert-success"><%= success %></div>
+    <% } %>
+    <% if(!locals.success) { %>
+        <form method="post">
+            <div class="form-group">
+                <label for="name">Name <span class="red">*</span></label>
+                <input type="text" name="name" id="name" class="form-control"  required />
+                 <% if(locals.valErrors) { %>
+                    <label class="alert alert-danger"><%= success %></label>
+                <% } %>
+            </div>
+            <div class="form-group">
+                <label for="email">Email <span class="red">*</span></label>
+                <input type="email" name="emails" id="emails" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="webAddress">Web Address</label>
+                <input type="url" name="webAddress" id="webAddress" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="coverLetter">Cover Letter (Optional but recommended)</label>
+                <textarea name="coverLetter" id="coverLetter" class="form-control" rows="5"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="attachement">Attachement (CV) <span class="red">*</span></label>
+                <input type="file" name="file" id="file" required />
+            </div>
+            <div class="form-group">
+                <label for="workingQs">Do you like working? (Yes/No) <span class="red">*</span></label>
+                <label class="radio-inline"><input type="radio" name="workingQs" value="Yes" required />Yes </label>
+                <label class="radio-inline"><input type="radio" name="workingQs" value="No"  required /> No </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </div>
+        </form>
+    <% } %>
+</div>
+
+
+<%- include('partials/footer') %>
