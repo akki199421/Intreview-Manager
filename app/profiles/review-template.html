@@ -1,0 +1,36 @@
+<!-- <h3>Reviews</h3>
+<div class="total-ratings">
+    <div class="rating-group">
+        <h4>Technical Skills:</h4> -->
+        <!-- <fieldset class="rating"> -->
+               <!--  <input type="radio" id="tech-star5" name="vm.techrating" value="5" /><label class = "full" for="tech-star5" title="Awesome - 5 stars"></label>
+                <input type="radio" id="tech-star4" name="vm.techrating" value="4" /><label class = "full" for="tech-star4" title="Pretty good - 4 stars"></label>
+                <input type="radio" id="tech-star3" name="vm.techrating" value="3" /><label class = "full" for="tech-star3" title="Ok - 3 stars"></label>
+                <input type="radio" id="tech-star2" name="vm.techrating" value="2" /><label class = "full" for="tech-star2" title="Kinda bad - 2 stars"></label>
+                <input type="radio" id="tech-star1" name="vm.techrating" value="1" /><label class = "full" for="tech-star1" title="Sucks big time - 1 star"></label> -->
+<!--                 <input type="radio" id="tech-star5" name="vm.techrating" value="5" /><label class = "full" for="tech-star5" title="Awesome - 5 stars"></label> -->
+                <!-- <input type="radio" ng-repeat="star in techStars track by $index" name="tech-stars"><label class="full" for="tech-stars"></label> -->
+                <ul class="star-rating" ng-class="{readonly: readonly}">
+                    <li ng-repeat="star in vm.stars track by $index" class="star" ng-class="{filled: star.filled}" ng-click="vm.toggle($index)">
+                        <i class="fa fa-star"></i></li>
+                </ul>
+
+        <!-- </fieldset> -->
+<!--         <div class="clearfix"></div>
+    </div>
+     <div class="rating-group">
+        <h4>Communication Skills:</h4>
+         <fieldset class="rating">
+            <input type="radio" id="commun-star5" name="commun-rating" value="5" /><label class = "full" for="commun-star5" title="Awesome - 5 stars"></label>
+            <input type="radio" id="commun-star4" name="commun-rating" value="4" /><label class = "full" for="commun-star4" title="Pretty good - 4 stars"></label>
+            <input type="radio" id="commun-star3" name="commun-rating" value="3" /><label class = "full" for="commun-star3" title="Ok - 3 stars"></label>
+            <input type="radio" id="commun-star2" name="commun-rating" value="2" /><label class = "full" for="commun-star2" title="Kinda bad - 2 stars"></label>
+            <input type="radio" id="commun-star1" name="commun-rating" value="1" /><label class = "full" for="commun-star1" title="Sucks big time - 1 star"></label>
+            <div class="clearfix"></div>
+        </fieldset>
+    </div>
+    <div class="save-btn">
+        <a class="btn btn-primary" ng-click="vm.saveRating()">Save</a>
+    </div>
+    <div class="clearfix"></div>
+</div> -->

@@ -46,7 +46,7 @@ module.exports.authenticate = function(userName, pass, done){
 		if(userRes){
 			if(bcrypt.compareSync(pass, userRes.hash)){
 				console.log('in sync');
-				return done(err, jwt.sign({ sub: userRes._id }, config.secret))
+				return done(err, jwt.sign({ userId: userRes._id }, config.secret))
 			}
 			else{
 				//email not found
@@ -61,5 +61,27 @@ module.exports.authenticate = function(userName, pass, done){
 			return done(error, null);
 		}
 		
+	});
+}
+
+module.exports.getUser = function(headers, done){
+	console.log('inside user model',typeof headers.authorization);
+	var decoded;
+	if(headers && headers.authorization){
+		var token = headers.authorization.substring(7,headers.authorization.length);
+		console.log('token is',token);
+		try{
+			decoded = jwt.verify(token,config.secret);
+		}
+		catch(e){
+			console.log('error in verify',e);
+			return done(401, null);
+		}
+	}
+	User.findOne({_id: decoded.userId}).exec(function(err, userRes){
+		if(userRes){
+			return done(null, userRes);
+		}
+		return done(404, null);
 	});
 }

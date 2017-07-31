@@ -9,7 +9,7 @@
       <h4 class="panel-title" style="color:#fa39c3">
         <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" >
           <span uib-accordion-header ng-class="{'text-muted': isDisabled}">
-           {{name}}
+           {{profile.name}}
           </span>
         </a>
       </h4>
@@ -20,11 +20,62 @@
   </script> -->
 	<div class="profiles">
 		<uib-accordion close-others="true">
-			<div uib-accordion-group class="panel-default" ng-class="{highlight : !isRead}">
+			<div uib-accordion-group class="panel-default" is-open="true" ng-class="{highlight : !pc.isRead}" ng-repeat="profile in pc.profiles track by $index">
 				<uib-accordion-heading >
-		        Name : {{name}} <br/>
-		        Email : {{email}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}"></i>
+		        Name : {{profile.name}} <br/>
+		        Email : {{profile.emails}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}"></i>
 		      </uib-accordion-heading>
+		      <div class="profile-data-des">
+		      	<table class="table">
+		      		<tr>
+		      			<td> Name: </td>
+		      			<td> {{profile.name}}</td>
+		      		</tr>
+		      		<tr>
+		      			<td> Email: </td>
+		      			<td> {{profile.emails}}</td>
+		      		</tr>
+		      		<tr>
+		      			<td> Web Address: </td>
+		      			<td> {{profile.webAddress}}</td>
+		      		</tr>
+		      		<tr>
+		      			<td> Cover Letter: </td>
+		      			<td> {{profile.coverLetter}}</td>
+		      		</tr>
+		      		<tr>
+		      			<td> Do you like working?: </td>
+		      			<td> {{profile.workingQs}}</td>
+		      		</tr>
+		      		<tr>
+		      			<td> Resume: </td>
+		      			<td> {{profile.name}}</td>
+		      		</tr>
+		      		<tr>
+		      			<td> IP: </td>
+		      			<td> {{profile.ip}}</td>
+		      		</tr>
+		      		<tr>
+		      			<td> Location: </td>
+		      			<td> {{profile.location}}</td>
+		      		</tr>
+		      		<tr>
+		      			<td> Timestamp: </td>
+		      			<td> {{profile.timestamp}}</td>
+		      		</tr>
+		      	</table>
+		      	<div class="reviews">
+		      		<h3>Reviews</h3>
+			      	Technical Skills : <review-component  ng-model="profile.current_review.techRatings" on-select="pc.rateFunction(rating)"></review-component>{{pc.techRatings}}
+			      	Communication Skills : <review-component ng-model="profile.current_review.communRatings" on-select="pc.rateFunction(rating)"></review-component>
+			      	<button class="btn btn-primary" ng-click="pc.saveRatings($index)" ng-disabled="profile.saveBtnDisable">Save</button>
+			      	<label ng-if="profile.successMsg" class="label label-success"> Review Saved Successfully</label>
+			    </div>
+			    <div class="comments">
+			    	<h3>Comments</h3>
+			    	<comment-component ng-model="profile.comments" on-save="pc.saveNewComment($index,newComment)"></comment-component>
+			    </div>
+		      </div>
 			</div>
 		</uib-accordion>
 	</div>

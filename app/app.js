@@ -11,7 +11,8 @@
         $stateProvider.state('profiles-dis',{
         	url: '/',
         	templateUrl: 'profiles/index.html',
-        	controller: 'ProfileController'
+        	controller: 'ProfileController',
+            controllerAs: 'pc'
         });
 	}
 

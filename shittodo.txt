@@ -1,0 +1,15 @@
+profileread function
+
+save comments and reviews
+
+filters
+
+serch
+
+file upload
+
+location based on ip
+
+profile service and user service diff
+
+make both reviews compulsory

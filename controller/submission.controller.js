@@ -7,7 +7,7 @@ var multer = require('multer');
 var expressValidator = require('express-validator');
 var multiparty = require('multiparty');
 // var ipaddr = require('ipaddr.js');
-
+var Q = require('q');
 
 var fs = require('fs');
 var path = require('path');
@@ -35,43 +35,48 @@ router.post('/', function(req, res, next){
 	var file = req.file;
 	var result = [];
    	res.dd = req.body;
-   	req.body.ip6 = req.ip;
-   	req.body.comments = [];
-console.log('file is in', req.body)
-   	// req.body.comments.push({
-   	// 	comment: 'Hello',
-   	// 	user_id:  mongoose.Schema.ObjectId("597d8c400b5e7e1294609588")
-   	// })
- //   	try{
- //   		var addr = ipaddr.parse(req.ip);
-	// 	req.body.ip4 = addr.toByteArray().toString(); 
-	// }
-	// catch(err){
-	// 	console.log('Error in ip conversion')
-	// }
-	console.log('request submitted', req.body);
+   	var ip =  req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+   	req.body.ip = ip.replace(/^.*:/, '');
+	console.log('file is in', req.body.ip);
+
+
+	//get location from freegeoip.net
+
+	request({
+		url: 'http://freegeoip.net/json/219.90.99.117',
+		json: true
+	}, function(error, response, body){
+		if (error || response.statusCode !== 200){
+			console.log('Error occurred while fetching location', error);
+		}
+		else if(response.statusCode === 200){
+			req.body.location = body.region_name + ', '+ body.country_name+ ' Pin Code: '+ body.zip_code;
+			console.log('location is', req.body.location, body);
+		}
+		profileModel.create(req.body,function(err, user){
+			if(err){
+				console.log(err);
+				if(err.code  === 11000)
+					return res.render('profile-submission',{ error: 'A profile with email: ' + req.body.emails + ' already exists.'});
+				else
+					return res.render('profile-submission', { error: 'An error occurred', json: JSON.stringify(req.body.emails) });
+			}
+			else{	
+				upload(req,res,function(err) {
+			        if(err) {
+			            console.log("Error uploading file.", err);
+			        }
+			        console.log("File is uploaded");
+			    });
+				return res.render('profile-submission', {
+	            	success: 'Your profile has been submitted successfullly'
+	        	});
+				console.log(user.id);
+			}
+		});
+	})
+	// console.log('request submitted', location_req);
 	
-	profileModel.create(req.body,function(err, user){
-		if(err){
-			console.log(err);
-			if(err.code  === 11000)
-				return res.render('profile-submission',{ error: 'A profile with email: ' + req.body.emails + ' already exists.'});
-			else
-				return res.render('profile-submission', { error: 'An error occurred', json: JSON.stringify(req.body.emails) });
-		}
-		else{	
-			upload(req,res,function(err) {
-		        if(err) {
-		            console.log("Error uploading file.", err);
-		        }
-		        console.log("File is uploaded");
-		    });
-			return res.render('profile-submission', {
-            	success: 'Your profile has been submitted successfullly'
-        	});
-			console.log(user.id);
-		}
-	});
 	// console.log(form.body.body);
 	// request.post({
 	// 	url: config.apiUrl + '/candidate/submission',

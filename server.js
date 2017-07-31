@@ -45,7 +45,6 @@ app.use('/api', expressJwt({ secret: config.secret }).unless({ path: ['/api/user
 app.use(express.static(path.join(__dirname, 'public')));
 
 // use JWT auth to secure the api
-// app.use('/api', expressJwt({ secret: config.secret }).unless({ path: ['/api/users/authenticate', '/api/users/register'] }));
 
 // // routes
 app.use('/submission', require('./controller/submission.controller'));
@@ -62,7 +61,7 @@ app.use('/api/user',require('./controller/api/user.controller'));
 
 
 app.get('/', function(req, res){
-	res.redirect('/register');
+	res.redirect('/submission');
 });
 
 // start server

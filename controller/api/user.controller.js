@@ -3,7 +3,13 @@ var router = express.Router();
 var config = require('config.json');
 var userModel = require('models/users');
 
-router.post('/register', function(req, res){
+router.post('/register', registerUser);
+
+router.post('/authenticate', authenticateUser);
+
+router.post('/current', fetchCurrentUser);
+
+function registerUser(req, res){
 	userModel.createUser(req.body, function(err, user){
 		console.log('back in reg')
 		if(err){
@@ -17,9 +23,9 @@ router.post('/register', function(req, res){
 		}
 
 	})
-});
+}
 
-router.post('/authenticate', function(req, res){
+function authenticateUser(req, res){
 	userModel.authenticate(req.body.email, req.body.password, function(err, token){
 		console.log('back in auth');
 		if(err){
@@ -33,6 +39,18 @@ router.post('/authenticate', function(req, res){
 		
 
 	})
-})
+}
+
+function fetchCurrentUser(req, res){
+	console.log('fetch Current User',req.headers);
+	userModel.getUser(req.headers, function(err, user){
+		console.log('back in getUser');
+		if(err){
+			console.log('err in getUser', err);
+			res.status(401).send(err);
+		}
+		res.status(200).send(user);
+	})
+}
 
 module.exports = router;

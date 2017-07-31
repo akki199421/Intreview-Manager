@@ -11,7 +11,7 @@ router.get('/', function(req, res){
     delete req.session.success;
 
 	res.render('login', success);
-	console.log('login');
+	console.log('login',req.session.token);
 });
 
 router.post('/', function(req, res){
