@@ -14,6 +14,8 @@ var logger = require('morgan');
 var expressValidator = require('express-validator');
 
 
+var port = process.env.port || 3000;
+
 //mongo config
 mongoose.connect(config.dbUrl);
 
@@ -49,6 +51,6 @@ app.get('/', function(req, res){
 });
 
 // start server
-var server = app.listen(3001, function () {
+var server = app.listen(port, function () {
     console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
 });
