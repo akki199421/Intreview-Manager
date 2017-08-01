@@ -44,7 +44,7 @@ module.exports.authenticate = function(userName, pass, done){
 		if(userRes){
 			if(userRes.email_conf){
 				if(bcrypt.compareSync(pass, userRes.hash)){
-					return done(err, jwt.sign({ userId: userRes._id }, config.secret))
+					return done(err, jwt.sign({ userId: userRes._id }, config.secret));
 				}
 				else{
 					//password wrong

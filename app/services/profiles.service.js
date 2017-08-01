@@ -8,7 +8,6 @@
 		}
 
 		service.updateReview = function(profile, user_id){
-			console.log('update profile',profile, user_id);
 			return $http.post('/api/candidate/update-reivew', profile).then(successFn, errorFn);
 		}
 

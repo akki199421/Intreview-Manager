@@ -1,6 +1,6 @@
 (function(){
 	angular.module('profileMag')
-	.controller('ProfileController', function($scope,$uibModal, ProfileService, UserService){
+	.controller('ProfileController', function($scope, $uibModal, ProfileService, UserService){
 		var pc = this;
 		var _currentUser;
 		pc.init = function(){
@@ -98,8 +98,7 @@
 		      });
 		}
 		pc.init();
-	})
-	.component('commentComponent',{
+	}).component('commentComponent',{
 		templateUrl: 'profiles/comment-template.html',
 		controller: 'CommentsController',
 		controllerAs: 'cm',
@@ -107,8 +106,7 @@
 			existComments: '=ngModel',
 			onSave: '&?'
 		}
-	})
-	.controller('CommentsController', function(ProfileService){
+	}).controller('CommentsController', function(ProfileService){
 		var cm = this;
 		cm.newCm = {};
 		cm.addNewComment = function(){
@@ -117,8 +115,7 @@
 			cm.newCm = {};
 		}
 
-	})
-	.component('reviewComponent',{
+	}).component('reviewComponent',{
 		templateUrl: 'profiles/review-template.html',
 		controller: 'RatingsController',
 		controllerAs: 'vm',
