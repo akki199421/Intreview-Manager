@@ -4,15 +4,13 @@ var app = express();
 var express = require('express');
 var path = require('path');
 var mongoose = require('mongoose');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var expressJwt = require('express-jwt');
 var config = require('config.json');
 var logger = require('morgan');
-var expressValidator = require('express-validator');
 
+var port = process.env.port || 3000;
 
 //mongo config
 mongoose.connect(config.dbUrl);
@@ -49,6 +47,6 @@ app.get('/', function(req, res){
 });
 
 // start server
-var server = app.listen(3001, function () {
+var server = app.listen(port, function () {
     console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
 });
