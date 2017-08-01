@@ -1,5 +1,7 @@
 ﻿{
     "dbUrl": "mongodb://localhost:27017/interview-manager",
     "apiUrl": "http://localhost:3001/api",
-    "secret": "absolutetopsecret"
+    "secret": "absolutetopsecret",
+    "email": "interviewManager123@gmail.com",
+    "email_pass" : "interview@123"
 }

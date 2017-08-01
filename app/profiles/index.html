@@ -1,30 +1,87 @@
 <div class="main-content">
 	<h1> Profiles</h1>
-	<div class="pull-right">
-		Filters: 
+	<div class="filters">
+		<div class="form-group">
+			<label for=""> Search by email:</label>
+			 <input type="text" class="form-control" ng-model="search.emails">
+			</div>
+		<div class="form-group">
+			<label for=""> Search by name:</label>
+			 <input type="text" class="form-control" ng-model="search.name">
+		</div>
+		<div class="clearfix"></div>
 	</div>
 	<div class="clearfix"></div>
-<!-- 	<script type="text/ng-template" id="profile-template.html">
-    <div class="panel-heading">
-      <h4 class="panel-title" style="color:#fa39c3">
-        <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" >
-          <span uib-accordion-header ng-class="{'text-muted': isDisabled}">
-           {{name}}
-          </span>
-        </a>
-      </h4>
-    </div>
-    <div class="panel-collapse collapse" uib-collapse="!isOpen">
-      <div class="panel-body" style="text-align: right" ng-transclude></div>
-    </div>
-  </script> -->
 	<div class="profiles">
 		<uib-accordion close-others="true">
-			<div uib-accordion-group class="panel-default" ng-class="{highlight : !isRead}">
+			<div uib-accordion-group class="panel-default" is-open="true" ng-class="{highlight : !profile.saveBtnDisable}" ng-repeat="profile in pc.profiles | filter: search track by $index" >
 				<uib-accordion-heading >
-		        Name : {{name}} <br/>
-		        Email : {{email}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}"></i>
+		        Name : {{profile.name}} <br/>
+		        Email : {{profile.emails}}
+		        <label class="label label-success reviewed-label" ng-if= "profile.saveBtnDisable">Reviewed</label>
+		         <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}"></i>
 		      </uib-accordion-heading>
+		      <div class="profile-data-des">
+		      	<table class="table">
+		      		<tr>
+		      			<td> Name: </td>
+		      			<td> {{profile.name}}</td>
+		      		</tr>
+		      		<tr>
+		      			<td> Email: </td>
+		      			<td> {{profile.emails}}</td>
+		      		</tr>
+		      		<tr>
+		      			<td> Web Address: </td>
+		      			<td> {{profile.webAddress}}</td>
+		      		</tr>
+		      		<tr>
+		      			<td> Cover Letter: </td>
+		      			<td> {{profile.coverLetter}}</td>
+		      		</tr>
+		      		<tr>
+		      			<td> Do you like working?: </td>
+		      			<td> {{profile.workingQs}}</td>
+		      		</tr>
+		      		<tr>
+		      			<td> Resume: </td>
+		      			<td> <button type="button" class="btn btn-primary" ng-click="pc.openPdf($index)">{{profile.cvOriginalName}}</button>
+					</td>
+		      		</tr>
+		      		<tr>
+		      			<td> IP: </td>
+		      			<td> {{profile.ip}}</td>
+		      		</tr>
+		      		<tr>
+		      			<td> Location: </td>
+		      			<td> {{profile.location}}</td>
+		      		</tr>
+		      		<tr>
+		      			<td> Timestamp: </td>
+		      			<td> {{profile.timestamp}}</td>
+		      		</tr>
+		      	</table>
+
+			    <div class="pdf-review" ng-hide="pc.openedPdf === $index">
+					<script type="text/ng-template" id="fileModal.html">
+					    <div class="modal-body">
+					    	<ng-pdf template-url="profiles/file-template.html"  scale="1">
+					    	</ng-pdf>
+					    </div>
+					</script>
+			    </div>
+		      	<div class="reviews">
+		      		<h3>Reviews</h3>
+			      	Technical Skills : <review-component  ng-model="profile.current_review.techRatings" on-select="pc.rateFunction(rating)"></review-component>{{pc.techRatings}}
+			      	Communication Skills : <review-component ng-model="profile.current_review.communRatings" on-select="pc.rateFunction(rating)"></review-component>
+			      	<button class="btn btn-primary" ng-click="pc.saveRatings($index)" ng-disabled="profile.saveBtnDisable">Save</button>
+			      	<label ng-if="profile.successMsg" class="label label-success"> Review Saved Successfully</label>
+			    </div>
+			    <div class="comments">
+			    	<h3>Comments</h3>
+			    	<comment-component ng-model="profile.comments" on-save="pc.saveNewComment($index,newComment)"></comment-component>
+			    </div>
+		      </div>
 			</div>
 		</uib-accordion>
 	</div>

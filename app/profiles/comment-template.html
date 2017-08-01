@@ -1,0 +1,11 @@
+<ul class="comments-group">
+	<li class="comment" ng-repeat="c in cm.existComments">
+		<h4>{{c.user_name}}</h4>
+		<p>{{c.comment}}</p>
+	</li>
+</ul>
+<form name="cform" ng-submit="cm.addNewComment()" class="comment-form">
+	<h3>Add A Comment</h3>
+	<textarea placeholder="Your Comment Here" ng-model="cm.newCm.content" required class="form-control" rows="5"></textarea>
+	<button type="submit" class="btn btn-primary">Save</button> 
+</form>
