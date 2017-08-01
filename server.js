@@ -4,15 +4,11 @@ var app = express();
 var express = require('express');
 var path = require('path');
 var mongoose = require('mongoose');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var expressJwt = require('express-jwt');
 var config = require('config.json');
 var logger = require('morgan');
-var expressValidator = require('express-validator');
-
 
 var port = process.env.port || 3000;
 

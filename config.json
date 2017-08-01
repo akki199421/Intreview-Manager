@@ -1,5 +1,5 @@
 ﻿{
-    "dbUrl": "mongodb://akshay:pass@123@ds111461.mlab.com:11461/interview-manager",
+    "dbUrl": "mongodb://localhost:27017/interview-manager",
     "apiUrl": "http://localhost:3001/api",
     "secret": "absolutetopsecret",
     "email": "interviewManager123@gmail.com",

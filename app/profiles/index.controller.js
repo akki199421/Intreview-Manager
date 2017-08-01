@@ -26,7 +26,6 @@
 						return profile;
 					});
 				},function(error){
-					// console.log('error fetch All', error);
 					alert('Error fetching profiles');
 				});
 			}, function(err){
@@ -154,7 +153,6 @@
 		} 
 
 		vm.toggle = function(index){
-			console.log(typeof index);
 			if(vm.readonly === false){
 				vm.stars = _mapStart(index);
 				vm.seleRating = index + 1;
