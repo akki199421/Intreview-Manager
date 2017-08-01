@@ -5,7 +5,6 @@ var config = require('config.json');
 
 router.get('/', function(req, res){
 	res.render('register');
-	console.log('register');
 });
 
 router.post('/', function(req, res){
@@ -14,7 +13,6 @@ router.post('/', function(req, res){
         form: req.body,
         json: true
     }, function (error, response, body) {
-    	console.log('back in controller');
         if (error) {
             return res.render('register', { error: 'An error occurred' });
         }
@@ -28,9 +26,9 @@ router.post('/', function(req, res){
             });
         }
 
-        // return to login page with success message
-        req.session.success = 'Registration successful';
-        console.log('successful')
+
+        // return to login with success message
+        req.session.success = 'An email has been sent to the registerd email id. Please verify.';
         return res.redirect('/login');
     });
 })

@@ -3,21 +3,16 @@
 	.factory('UserService', function($http, $q){
 		var service = {}, currentUser;
 
-		_fetchCurrentUser();
-
 		function _fetchCurrentUser(){
-			console.log(_fetchCurrentUser)
-			$http.post('/api/user/current')
-			.then(function(res){
-				currentUser = res.data;
-				console.log('in service', currentUser);
-			}, function(err){
-				console.log('error', err);
-			});
+			return $http.post('/api/user/current')
 		}
 
 		service.getCurrentUser = function(){
-			return currentUser;
+			return _fetchCurrentUser().then(function(res){
+				return res.data;
+			},function(err){
+				return null;
+			});
 		}
 
 		return service;

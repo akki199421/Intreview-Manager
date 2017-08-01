@@ -6,12 +6,11 @@ var config = require('config.json');
 router.get('/', function(req, res){
 	 delete req.session.token;
 
-    // move success message into local variable so it only appears once (single read)
+    // move success message into local 
     var success = { success: req.session.success };
     delete req.session.success;
 
 	res.render('login', success);
-	console.log('login',req.session.token);
 });
 
 router.post('/', function(req, res){
@@ -23,17 +22,12 @@ router.post('/', function(req, res){
         if (error) {
             return res.render('login', { error: 'An error occurred' });
         }
-
         if (!body.token) {
             return res.render('login', { error: body, email: req.body.email });
         }
 
         // save JWT token in session 
         req.session.token = body.token;
-
-        console.log('login done');
-        // redirect to returnUrl
-        // var returnUrl = req.query.returnUrl && decodeURIComponent(req.query.returnUrl) || '/';
         res.redirect('/app');
     });
 })

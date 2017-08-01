@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	angular.module('profileMag', ['ui.router', 'ui.bootstrap'])
+	angular.module('profileMag', ['ui.router', 'ui.bootstrap' ,'pdf'])
 	.config(config)
 	.run(run);
 
@@ -19,11 +19,6 @@
 	function run($http, $rootScope, $window) {
         // jwt token as default
         $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.jwtToken;
-
-        // update active tab on state change
-        // $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-        //     $rootScope.activeTab = toState.data.activeTab;
-        // });
     }
 
 
@@ -32,7 +27,6 @@
         // get JWT token
         $.get('/app/token', function (token) {
             window.jwtToken = token;
-            console.log('in',token);
             angular.bootstrap(document, ['profileMag']);
         });
     });

@@ -16,8 +16,10 @@ var reviewSchema = mongoose.Schema({
 var profileSchema = mongoose.Schema({
 	name: {type: String, required: true},
 	emails: {type: String, required: true, index: { unique: true }},
-	webAddress: {type: String},
+	webAddress: {type: String ,required: true},
 	coverLetter: {type: String},
+	cvOriginalName: {type: String, required: true},
+	cvSavedName: {type:String, required: true},
 	workingQs: {type: String, required: true},
 	ip: {type: String},
 	location: {type: String},
@@ -25,41 +27,6 @@ var profileSchema = mongoose.Schema({
 	comments: [commentsSchema],
 	reviews: [reviewSchema]
 });
-
-
-profileSchema.pre('save', function(next) {
-    var self = this;
-    console.log('inside pre');
-    // if (!this.reviews || this.reviews.length == 0) {
-    // 	this.reviews = [];
-    // 	this.reviews.push({
-    // 		"techRatings": 0,
-    		
-    // 	})
-    // }
-
-    // Profile.findOne({emails : this.emails}, 'emails', function(err, results) {
-    //     if(err) {
-    //         next(err);
-    //     } else if(results) {
-    //         console.warn('results', results);
-    //         self.invalidate("emails", "email must be unique");
-    //         next(new Error("email must be unique"));
-    //     }
-    // });
-    next();
-});
-// ,
-// 	comments: [{
-// 		comment: String,
-// 		user_id: mongoose.Schema.Types.ObjectId,
-// 		user_name: String
-// 	}],
-// 	reviews: [{
-// 		techRatings: {type: Number, default: 0},
-// 		communRatings: {type: Number, default: 0},
-// 		user_id: mongoose.Schema.Types.ObjectId
-// 	}]
 
 var Profile = mongoose.model('Candidates', profileSchema);
 
@@ -81,8 +48,6 @@ module.exports.fetchAll = function(done){
 }
 
 module.exports.updateRew = function(profile,done){
-	console.log('update',profile.current_review);
-
 	Profile.findByIdAndUpdate({_id: profile._id},
 		{$addToSet: 
 			{ "reviews" : 
@@ -100,7 +65,6 @@ module.exports.updateRew = function(profile,done){
 }
 
 module.exports.updateCom = function(newComment, done){
-	console.log('update comment',newComment);
 	Profile.findByIdAndUpdate({_id: newComment.profile_id},
 		{$addToSet: 
 			{ "comments" : 

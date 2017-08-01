@@ -18,6 +18,10 @@
   margin: 20px 0;
 }
 
+.reviewed-label{
+  margin-left: 20px;
+}
+
 fieldset, label { margin: 0; padding: 0; }
 body{ margin: 20px; }
 h1 { font-size: 1.5em; margin: 10px; }
@@ -99,4 +103,18 @@ h1 { font-size: 1.5em; margin: 10px; }
 }
 .star-rating.readonly .star.filled {
   color: #666;
+}
+
+.pdf-modal-window .modal-dialog{
+  width: 80%;
+}
+
+.pdf-modal-window .modal-dialog canvas{
+  margin: 0 auto;
+  display: block;
+}
+
+.filters .form-group{
+  display: inline-block;
+  padding:  0 20px;
 }

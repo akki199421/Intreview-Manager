@@ -16,13 +16,12 @@
 			return $http.post('/api/candidate/update-comment', comment).then(successFn, errorFn);
 		}
 
+
 		var successFn = function(res){
-			console.log('success full response', res);
 			return res.data;
 		}
 
 		var errorFn = function(res){
-			console.log('response',res);
 			 return $q.reject(res.data);
 		}
 

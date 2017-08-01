@@ -1,55 +1,45 @@
 (function(){
 	angular.module('profileMag')
-	.controller('ProfileController', function($scope, ProfileService, UserService){
+	.controller('ProfileController', function($scope,$uibModal, ProfileService, UserService){
 		var pc = this;
 		var _currentUser;
 		pc.init = function(){
-			_currentUser = UserService.getCurrentUser();
-			console.log('sfsdf controller', UserService.getCurrentUser());	
-			ProfileService.getAllProfile()
-			.then(function(data){
-				console.log('Success fetchAll',data);
-				pc.profiles = data.map(function(profile){
-					_currentUser = UserService.getCurrentUser();
-					user_id = _currentUser._id;
-					console.log('user id', user_id);
-					profile.current_review = {};
-					profile.successMsg = false;
-					for(var i = 0; i<profile.reviews.length;i++){
-						if(profile.reviews[i].user_id === user_id){
-							{
-								profile.current_review = profile.reviews[i];
-								profile.saveBtnDisable = true;
+			pc.openedPdf = -1;
+			UserService.getCurrentUser().then(function(data){
+				_currentUser = data;
+				ProfileService.getAllProfile()
+				.then(function(data){
+					//check if the current user has already given a review and add it to current_review
+					//if not then add an empty object in current_review
+					pc.profiles = data.map(function(profile){
+						user_id = _currentUser._id;
+						profile.current_review = {};
+						profile.successMsg = false;
+						for(var i = 0; i<profile.reviews.length;i++){
+							if(profile.reviews[i].user_id === user_id){
+								{
+									profile.current_review = profile.reviews[i];
+									profile.saveBtnDisable = true;
+								}
 							}
 						}
-					}
-					console.log('profiles', profile.comments);
-					console.log('current',(profile.current_review.techRatings && profile.current_review.communRatings) === undefined);
-					return profile;
+						return profile;
+					});
+				},function(error){
+					// console.log('error fetch All', error);
+					alert('Error fetching profiles');
 				});
-			},function(error){
-				console.log('error fetch All', error);
+			}, function(err){
+				alert('Error fetching User');
 			});
-			// pc.techRatings = 0;
-			// pc.communRatings = 0;
-			pc.comments = [{
-				name: 'Akshay',
-				content: 'Hello A**holes'
-			},{
-				name: 'Prateek',
-				content: "asss"
-			}];
 		}
 		pc.saveNewComment = function(index,resComment){
-			console.log(resComment.content);
 			var newComment = {
 				comment : resComment.content,
 				user_id: _currentUser._id,
 				user_name: _currentUser.name,
 				profile_id: pc.profiles[index]._id
 			}
-			console.log('new Comment', index,newComment);
-
 			ProfileService.updateComment(newComment)
 			.then(function(data){
 				if(data === 'done'){
@@ -58,8 +48,6 @@
 			}, function(err){
 
 			});
-		}
-		pc.rateFunction = function(index,rating){
 		}
 		pc.saveRatings = function(index){
 			if(pc.profiles[index].current_review.techRatings === undefined ||
@@ -76,7 +64,6 @@
 				});
 
 				pc.profiles[index].current_review.user_id = user_id;
-				console.log('ready profile',pc.profiles[index]);
 
 				ProfileService.updateReview(pc.profiles[index])
 				.then(function(data){
@@ -89,8 +76,31 @@
 				});
 			}
 		}
+
+		pc.openPdf = function(index){
+			var fileSavedName = pc.profiles[index].cvSavedName;
+			var fileOriginalName = pc.profiles[index].cvOriginalName;
+			var modalInstance = $uibModal.open({
+		      animation: true,
+		      templateUrl: 'fileModal.html',
+		      windowClass: 'pdf-modal-window',
+		      controller: function($scope){
+		      	$scope.pdfUrl = '../uploads/'+fileSavedName;
+		      	$scope.heading = fileOriginalName;
+		      },
+		      resolve: {
+		      	fileSavedName: function(){
+		      		return fileSavedName;
+		      	},
+		      	fileOriginalName: function(){
+		      		return fileOriginalName;
+		      	}
+		      }
+		      });
+		}
 		pc.init();
-	}).component('commentComponent',{
+	})
+	.component('commentComponent',{
 		templateUrl: 'profiles/comment-template.html',
 		controller: 'CommentsController',
 		controllerAs: 'cm',
@@ -102,9 +112,10 @@
 	.controller('CommentsController', function(ProfileService){
 		var cm = this;
 		cm.newCm = {};
-		console.log('comments', cm.existComments)
 		cm.addNewComment = function(){
 			cm.onSave({newComment : cm.newCm});
+			//remove current comment content
+			cm.newCm = {};
 		}
 
 	})
@@ -131,7 +142,6 @@
 				vm.stars = _mapStart(vm.seleRating-1);
 				vm.readonly = true;
 			}
-			console.log('RatingsController', vm.onSelect, vm.seleRating);
 		}
 
 		var _mapStart = function(index){
@@ -150,10 +160,8 @@
 				vm.seleRating = index + 1;
 				vm.onSelect({rating: index+1});
 			}
-			console.log('Hello',vm.stars);
 		}
 		vm.saveRating = function(){
-			console.log('ins save', vm.techrating);
 		}
 		vm.init();
 	})
