@@ -33,7 +33,6 @@ var Profile = mongoose.model('Candidates', profileSchema);
 module.exports = Profile;
 
 module.exports.create = function(profile, callback){
-	console.log('inside create with pre', profile);
 	var newProfile = new Profile(profile);
 	newProfile.save(callback);	
 }

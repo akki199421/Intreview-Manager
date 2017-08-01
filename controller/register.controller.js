@@ -14,7 +14,7 @@ router.post('/', function(req, res){
         json: true
     }, function (error, response, body) {
         if (error) {
-            return res.render('register', { error: 'An error occurred' });
+            return res.render('register', { error: error });
         }
 
         if (response.statusCode !== 200) {

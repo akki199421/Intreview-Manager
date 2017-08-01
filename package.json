@@ -9,32 +9,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "\u0016https://github.com/akki199421/color-elephant-profile-mag"
+    "url": "https://github.com/akki199421/Intreview-Manage"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "angular": "^1.5.0",
-    "angular-pdf": "^2.0.0",
-    "angular-ui-bootstrap": "^2.5.0",
-    "angular-ui-router": "^0.2.15",
-    "bcrypt-nodejs": "0.0.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
-    "bootstrap": "^3.3.7",
     "ejs": "^2.5.6",
     "express": "^4.15.3",
     "express-jwt": "^5.3.0",
     "express-session": "^1.15.4",
     "jsonwebtoken": "^7.4.1",
     "loadash": "0.0.1",
-    "mongodb": "^2.2.30",
     "mongoose": "^4.11.4",
     "morgan": "^1.8.2",
     "multer": "^1.3.0",
     "nodemailer": "^4.0.1",
-    "pdfjs-dist": "^1.8.593",
-    "q": "^1.5.0",
     "request": "^2.81.0",
     "rootpath": "^0.1.2",
     "svg-captcha": "^1.3.9"

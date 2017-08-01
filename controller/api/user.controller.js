@@ -33,7 +33,7 @@ function registerUser(req, res){
 			//create email subject
 			var email_content = {};
 			email_content.sub = "Confirmation Email from Interview Manager";
-			email_content.html = "<p>Hello " + user.name +'</p><p>Click <a href="http://localhost:3001/api/user/verify?token=' + user.email_conf_hash + '" target="_blank">here</a> to verify your email</p>'
+			email_content.html = "<p>Hello " + user.name +'</p><p>Click <a href="http://localhost:3000/api/user/verify?token=' + user.email_conf_hash + '" target="_blank">here</a> to verify your email</p>'
 			//send email
 			emailService.sendEmail(user.email,email_content);
 			res.status(200).send('done');

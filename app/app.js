@@ -7,7 +7,6 @@
 
 	function config($stateProvider, $urlRouterProvider){
 		$urlRouterProvider.otherwise("/");
-		console.log('profile');
         $stateProvider.state('profiles-dis',{
         	url: '/',
         	templateUrl: 'profiles/index.html',
